@@ -1,0 +1,54 @@
+// Include the LiquidCrystal library for the LCD display
+#include <LiquidCrystal.h>
+
+// Initialize the library by associating any needed Arduino interface pin
+// with the lcd pin number it is connected to.
+// Pins: RS, Enable, D4, D5, D6, D7
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+// Define the analog pin where the LM35 temperature sensor is connected
+const int sensorPin = A0;
+
+void setup() {
+  // Set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  
+  // Print a welcome message to the LCD
+  lcd.setCursor(0, 0);
+  lcd.print("   Digital    ");
+  lcd.setCursor(0, 1);
+  lcd.print("  Thermometer ");
+  delay(2000); // Wait for 2 seconds
+  lcd.clear();
+}
+
+void loop() {
+  // Read the raw analog value from the LM35 sensor
+  int rawValue = analogRead(sensorPin);
+  
+  // Convert the analog value to voltage (for a 5V Arduino)
+  float voltage = (rawValue * 5.0) / 1023.0;
+  
+  // Convert voltage to temperature in Celsius (LM35 provides 10mV per degree Celsius)
+  float tempC = voltage * 100.0;
+  
+  // Convert Celsius to Fahrenheit
+  float tempF = (tempC * 9.0 / 5.0) + 32.0;
+
+  // Display the Celsius temperature on the first row
+  lcd.setCursor(0, 0);
+  lcd.print("Temp: ");
+  lcd.print(tempC, 1); // Prints temperature with 1 decimal place
+  lcd.print((char)223); // Prints the degree symbol (°)
+  lcd.print("C        ");
+
+  // Display the Fahrenheit temperature on the second row
+  lcd.setCursor(0, 1);
+  lcd.print("Temp: ");
+  lcd.print(tempF, 1); 
+  lcd.print((char)223); 
+  lcd.print("F        ");
+
+  // Wait 1 second before updating the reading
+  delay(1000);
+}
