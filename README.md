@@ -1,26 +1,32 @@
-// Define the pins for the water level sensor probes (inputs)
-const int lowLevelPin = 2;    // Probe at the bottom/low level
-const int medLevelPin = 3;    // Probe at the middle level
-const int highLevelPin = 4;   // Probe at the top/high level
+// Define Traffic Light Pins for Main Road
+const int mainGreen  = 2;
+const int mainYellow = 3;
+const int mainRed    = 4;
 
-// Define the pins for the indicator LEDs (outputs)
-const int lowLED = 8;         // Red LED
-const int medLED = 9;         // Yellow LED
-const int highLED = 10;       // Green LED
-const int buzzer = 11;        // Optional buzzer for full tank alert
+// Define Traffic Light Pins for Side Road (Smart Sensor Road)
+const int sideGreen  = 5;
+const int sideYellow = 6;
+const int sideRed    = 7;
+
+// Define Ultrasonic Sensor Pins (HC-SR04)
+const int trigPin = 8;
+const int echoPin = 9;
+
+// Distance threshold (in centimeters) to detect a waiting car
+const int carDistanceThreshold = 20; 
 
 void setup() {
-  // Set sensor pins as inputs with internal pull-up resistors
-  // This keeps the pins HIGH until they touch water (which connects them to GND)
-  pinMode(lowLevelPin, INPUT_PULLUP);
-  pinMode(medLevelPin, INPUT_PULLUP);
-  pinMode(highLevelPin, INPUT_PULLUP);
+  // Set Traffic Light pins as outputs
+  pinMode(mainGreen, OUTPUT);
+  pinMode(mainYellow, OUTPUT);
+  pinMode(mainRed, OUTPUT);
+  pinMode(sideGreen, OUTPUT);
+  pinMode(sideYellow, OUTPUT);
+  pinMode(sideRed, OUTPUT);
+  
+  // Set Ultrasonic Sensor pins
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
 
-  // Set LED and buzzer pins as outputs
-  pinMode(lowLED, OUTPUT);
-  pinMode(medLED, OUTPUT);
-  pinMode(highLED, OUTPUT);
-  pinMode(buzzer, OUTPUT);
-}
-
-void loop() {
+  // Initial State: Main road is Green
+  
